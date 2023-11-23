@@ -3,6 +3,7 @@ integrantes :
 - Aguilar Martinez Fernando
 - Garcia Alvarado Jose Iyaquibalam
 - Gonzalez Ordaz Ariel
+- Arteaga Reyes Aldair
 
 *Sistema de Gestión de Citas en una Clínica Dental*
 
