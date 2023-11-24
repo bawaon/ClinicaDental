@@ -32,23 +32,42 @@ public class Consultorio
 		
 	}
 	
-	public Boolean verificaDisponibilidadDentista()
+	public Boolean verificaDisponibilidadDentista(Integer idDent, Date fecha, Double Hora)
 	{
-		return null;
+		Dentista dentTemp = dentistas.get(idDent);
+		if (dentTemp!= null){
+			return true
+		}
+		return false ;
 	}
 	
 	public void reprogramarCita()
 	{
-		
+		Cita citaTep= encontrarCitaPorId(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Id de la cita a reprogramar")));
+		if(citaTep!= null){
+			
+		}
+		else{
+			
+		}
 	}
 	
-	public void encontrarCitaPorId()
+	public Cita encontrarCitaPorId(Integer citaId)
 	{
-		
+		for (Cita citatem : citas)
+			if (citaTemp.id==citaId)
+			{
+				return 	citaTemp;
+			}
+			else {
+				JOptionPane.showMessage(null, "Cita no encontrada");
+			}
+		return null;
 	}
 	
 	public Paciente unPaciente()
 	{
+		
 		return null;
 	}
 	
