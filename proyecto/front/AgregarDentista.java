@@ -1,6 +1,8 @@
 package front;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -17,7 +19,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+
+import back.Dentista;
+import back.Paciente;
 
 public class AgregarDentista extends JPanel implements ActionListener
 {
@@ -25,8 +31,18 @@ public class AgregarDentista extends JPanel implements ActionListener
 	private JComboBox boxMeses;
 	private JComboBox boxDias;
 	
-	public AgregarDentista()
+	private JTextField txtNombre;
+	private JTextField txtApellidoP;
+	private JTextField txtApellidoM;
+	private JTextField txtId;
+	private JTextField txtEspecialidad;
+
+	private ArrayList<Dentista> dent;
+	
+	public AgregarDentista(ArrayList<Dentista> dent)
 	{
+		InterfazCita frame = (InterfazCita)SwingUtilities.getWindowAncestor(AgregarDentista.this);
+		
 		setLayout(null);
 		setSize(585,405);
 		setLocation(235,20);
@@ -35,6 +51,8 @@ public class AgregarDentista extends JPanel implements ActionListener
 		border.setTitleColor(new Color(48,96,189));
 		setBorder(border);
 
+		this.dent = dent;
+		
 		JLabel lbTitulo = new JLabel("Ingrese Datos Del Dentista");
 		lbTitulo.setBounds(20,20,200,20);
 		lbTitulo.setForeground(new Color(48,96,189));
@@ -48,7 +66,7 @@ public class AgregarDentista extends JPanel implements ActionListener
 		lbNombre.setForeground(new Color(48,96,189));
 		add(lbNombre);
 		
-		JTextField txtNombre = new JTextField();
+		txtNombre = new JTextField();
 		txtNombre.setBounds(x + 25,y + 50 + 20,150,20);
 		txtNombre.setBackground(new Color(175,175,175));
 		txtNombre.setForeground(new Color(48,96,189));
@@ -61,7 +79,7 @@ public class AgregarDentista extends JPanel implements ActionListener
 		lbApellidoP.setForeground(new Color(48,96,189));
 		add(lbApellidoP);
 		
-		JTextField txtApellidoP = new JTextField();
+		txtApellidoP = new JTextField();
 		txtApellidoP.setBounds(x + 200,y + 50 + 20,150,20);
 		txtApellidoP.setBackground(new Color(175,175,175));
 		txtApellidoP.setForeground(new Color(48,96,189));
@@ -74,7 +92,7 @@ public class AgregarDentista extends JPanel implements ActionListener
 		lbApellidoM.setForeground(new Color(48,96,189));
 		add(lbApellidoM);
 		
-		JTextField txtApellidoM = new JTextField();
+		txtApellidoM = new JTextField();
 		txtApellidoM.setBounds(x + 375,y + 50 + 20,150,20);
 		txtApellidoM.setBackground(new Color(175,175,175));
 		txtApellidoM.setForeground(new Color(48,96,189));
@@ -82,26 +100,13 @@ public class AgregarDentista extends JPanel implements ActionListener
 		txtApellidoM.setColumns(20);
 		add(txtApellidoM);
 
-		JLabel lbId = new JLabel("ID");
-		lbId.setBounds(x + 45,y + 50 + 40,75,20);
-		lbId.setForeground(new Color(48,96,189));
-		add(lbId);
-		
-		JTextField txtId = new JTextField();
-		txtId.setBounds(x + 25,y + 50 + 20 + 40,50,20);
-		txtId.setBackground(new Color(175,175,175));
-		txtId.setForeground(new Color(48,96,189));
-		txtId.setEditable(true);
-		txtId.setColumns(20);
-		add(txtId);
-
-		JLabel lbEspecialidad = new JLabel("Especialidad");
-		lbEspecialidad.setBounds(x + 140,y + 50 + 40,75,20);
+		JLabel lbEspecialidad = new JLabel("Especialidad Del Dentista");
+		lbEspecialidad.setBounds(x + 200,y + 50 + 40,175,20);
 		lbEspecialidad.setForeground(new Color(48,96,189));
 		add(lbEspecialidad);
 		
-		JTextField txtEspecialidad = new JTextField();
-		txtEspecialidad.setBounds(x + 100,y + 50 + 20 + 40,150,20);
+		txtEspecialidad = new JTextField();
+		txtEspecialidad.setBounds(x + 25,y + 50 + 20 + 40,500,20);
 		txtEspecialidad.setBackground(new Color(175,175,175));
 		txtEspecialidad.setForeground(new Color(48,96,189));
 		txtEspecialidad.setEditable(true);
@@ -169,14 +174,21 @@ public class AgregarDentista extends JPanel implements ActionListener
 		try
 		{
 			conv = sdf.parse(fecha);
-		}
-		catch(ParseException e)
-	    	{
-	    		JOptionPane.showMessageDialog(null,"Ingrese Un Valor Correcto");
-	      		conv = null;
-	    	}
+	    }catch(ParseException e)
+	    {
+	    	JOptionPane.showMessageDialog(null,"Ingrese Un Valor Correcto");
+	      	conv = null;
+	    }
 	    return conv;
 	}
+	
+	private boolean camposVacios()
+	{
+		return txtNombre.getText().isEmpty() ||
+        		txtApellidoP.getText().isEmpty() ||
+        		txtApellidoM.getText().isEmpty() ||
+        		txtEspecialidad.getText().isEmpty();
+    }
 	
 	public Date guardarDatosFecha()
 	{
@@ -190,9 +202,23 @@ public class AgregarDentista extends JPanel implements ActionListener
 		return fecha;
 	}
 
+	public void guardarDatos()
+	{	
+		String id = "" +(dent.size() + 1);
+		String nombre = txtNombre.getText();
+		String apellidoP = txtApellidoP.getText();
+		String apellidoM = txtApellidoM.getText();
+		String especialidad = txtEspecialidad.getText();
+		Date fecha = guardarDatosFecha();
+		dent.add(new Dentista(id,nombre,apellidoP,apellidoM,fecha,especialidad,null));
+        revalidate();
+        repaint();
+	}
+	
 	public void actionPerformed(ActionEvent e)
 	{
-        int diasTotal = 0;
+      
+		int diasTotal = 0;
 		String nombreEvento = e.getActionCommand();
 		String mesObtenido = (String)boxMeses.getSelectedItem();
 		
@@ -256,7 +282,14 @@ public class AgregarDentista extends JPanel implements ActionListener
 		}
 		else if(nombreEvento.equals("guardar_Datos"))
 		{
-			guardarDatosFecha();
+			if(camposVacios() == false)
+			{
+                guardarDatos();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null,"Ingrese Todos Los Datos");
+			}
 		}
 	}
 }
