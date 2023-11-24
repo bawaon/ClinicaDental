@@ -15,17 +15,12 @@ public class Dentista extends Persona
 		this.horariosDisponibles = horariosDisponibles;
 	}
 	
-	public Dentista()
-	{
-		
-	}
-	
+	public Dentista() {}
 	public String imprimirDatos()
 	{
 		String datos = super.imprimirDatos() + imprimir();
 		return datos;
-	}
-	
+	}	
 	public String imprimir()
 	{
 		String datos = "Titulo: " + titulo + "Horarios disponibles: ";
@@ -36,27 +31,20 @@ public class Dentista extends Persona
 		}
 		return datos;
 	}
-
 	public String getTitulo() 
 	{
 		return titulo;
 	}
-
 	public void setTitulo(String titulo) 
 	{
 		this.titulo = titulo;
 	}
-
 	public ArrayList<String> getHorariosDisponibles() 
 	{
 		return horariosDisponibles;
 	}
-
 	public void setHorariosDisponibles(ArrayList<String> horariosDisponibles) 
 	{
 		this.horariosDisponibles = horariosDisponibles;
 	}
-	
-	
-
 }

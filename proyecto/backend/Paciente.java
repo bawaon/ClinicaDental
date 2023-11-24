@@ -12,20 +12,13 @@ public class Paciente extends Persona
 		this.cita = cita;
 	}
 	
-	public Paciente()
-	{
-		
-	}
-
+	public Paciente(){}
 	public Cita getCita() 
 	{
 		return cita;
 	}
-
 	public void setCita(Cita cita) 
 	{
 		this.cita = cita;
-	}
-	
-	
+	}	
 }

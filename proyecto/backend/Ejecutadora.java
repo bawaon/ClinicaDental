@@ -27,8 +27,6 @@ public class Ejecutadora {
 		Paciente pac2 = new Paciente(null, "2", "Roberto", "Perez", "Ordaz", deStringaDate("31/12/2002"));
 		
 		Paciente pac3 = new Paciente(null, "3", "Michelle", "Rosas", "Castro", deStringaDate("21/06/20010"));
-		
-
 	}
 	
 	public static Date deStringaDate(String fecha)
@@ -46,5 +44,4 @@ public class Ejecutadora {
 		}
 		return fechaD;
 	}
-
 }
