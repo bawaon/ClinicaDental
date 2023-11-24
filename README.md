@@ -7,6 +7,12 @@ estructura de datos que permita a los pacientes reservar citas con dentistas (al
 menos 2 dentistas) y verificar la disponibilidad de horarios. Además, debe incluir
 funciones como la posibilidad de reprogramar citas existentes.
 
+
+*update 1.1*
+
+- se actualizo varias clases para el manejo noptimo del codigo
+- se mejoró la intefaz para el usuario final
+- 
 *Update 1.0*
 
 - se agregaron los archivos para el frotend
