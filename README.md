@@ -10,7 +10,7 @@ funciones como la posibilidad de reprogramar citas existentes.
 *Update 1.0*
 
 - se agregaron los archivos para el frotend
--optimización de codigo
+- optimización de codigo
 
 *Update 0.1*
 
