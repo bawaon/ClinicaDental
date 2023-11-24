@@ -12,3 +12,4 @@ Update 0.1
 - se agrego la boceto clase ejecutadora
 - se optimizaron las lineas de codigo para mejor lectura y ejecución
 - se creo el link para compartir el proyecto
+- https://gitfront.io/r/bawaon/onbhVgJsCbdp/ClinicaDental/
