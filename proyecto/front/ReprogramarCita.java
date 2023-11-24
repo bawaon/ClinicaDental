@@ -121,11 +121,12 @@ public class ReprogramarCita extends JPanel implements ActionListener
 		try
 		{
 			conv = sdf.parse(fecha);
-	    }catch(ParseException e)
-	    {
-	    	JOptionPane.showMessageDialog(null,"Ingrese Un Valor Correcto");
-	      	conv = null;
-	    }
+	    	}
+		catch(ParseException e)
+	    	{
+	    		JOptionPane.showMessageDialog(null,"Ingrese Un Valor Correcto");
+	      		conv = null;
+	    	}
 	    return conv;
 	}
 	
