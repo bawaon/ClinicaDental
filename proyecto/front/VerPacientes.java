@@ -1,6 +1,7 @@
 package front;
 
 import backend.*;
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.GridLayout;
@@ -25,46 +26,47 @@ import javax.swing.table.DefaultTableModel;
 
 import back.*;
 
-public class VerDoctores extends JPanel implements ActionListener
-{
-	private String[] tablaColumnas;
+public class VerPacientes extends JPanel implements ActionListener
+{private String[] tablaColumnas;
         private DefaultTableModel tamanioTabla;
-	private ArrayList<Dentista> dent;
+	private ArrayList<Paciente> pacie;
 	
-	public VerDoctores(ArrayList<Dentista> dent)
+	public VerPacientes(ArrayList<Paciente> pacie)
 	{
 		setLayout(null);
 		setSize(585,405);
 		setLocation(235,20);
 		setBackground(new Color(215,245,240));
-		TitledBorder border = BorderFactory.createTitledBorder("Ver Lista De Doctores Disponibles");
+		TitledBorder border = BorderFactory.createTitledBorder("Ver Lista De Pacientes Ingresados");
 		border.setTitleColor(new Color(48,96,189));
 		setBorder(border);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-		this.dent = dent;
+		this.pacie = pacie;
 		
-		JLabel lbTitulo = new JLabel("Busque Los Doctores Disponibles Hasta El Momento");
+		JLabel lbTitulo = new JLabel("Busque Los Pacientes Ingresados Hasta El Momento");
 		lbTitulo.setBounds(20,20,400,20);
 		lbTitulo.setForeground(new Color(48,96,189));
 		add(lbTitulo);
 
-		String[] tablaColumnas = {"Nombre Completo","Fecha Nacimiento","ID","Especialidad","Horario"};
+		String[] tablaColumnas = {"Nombre Completo","Fecha Nacimiento","ID","Razon","Dentista","ID Paciente"};
 		tamanioTabla = new DefaultTableModel(tablaColumnas,0);
-		JTable tablaDoctores = new JTable(tamanioTabla);
-		tablaDoctores.setEnabled(false);
+		JTable tablaPacientes = new JTable(tamanioTabla);
+		tablaPacientes.setEnabled(false);
 		Border bordeListaDentistas = BorderFactory.createCompoundBorder(
 	            BorderFactory.createLineBorder(new Color(0,0,0),1),BorderFactory.createEmptyBorder(5,5,5,5));
-		tablaDoctores.setBorder(bordeListaDentistas);
-		for(Dentista d:dent)
+		tablaPacientes.setBorder(bordeListaDentistas);
+		for(Paciente p:pacie)
 		{
-			String auxNombre = "" +d.getNombre() +" " +d.getApellidoP() +" " +d.getApellidoM();
-			Object[] datosDoctor = {auxNombre,sdf.format(d.getFechaNac()),d.getId(),d.getTitulo(),"0"};
-			tamanioTabla.addRow(datosDoctor);
+			String auxNombre = "" +p.getNombre() +" " +p.getApellidoP() +" " +p.getApellidoM();
+			Object[] datosPaciente = {auxNombre,sdf.format(p.getFechaNac()),p.getId(),
+                            p.getCita().getRazonVisita(),p.getCita().getDentista().getNombre(),
+                            p.getCita().getId()};
+			tamanioTabla.addRow(datosPaciente);
 		}
-		JScrollPane scrollTablaDoctores = new JScrollPane(tablaDoctores);
-		scrollTablaDoctores.setBounds(20,50,540,300);
-		add(scrollTablaDoctores);
+		JScrollPane scrolltablaPacientes = new JScrollPane(tablaPacientes);
+		scrolltablaPacientes.setBounds(20,50,540,300);
+		add(scrolltablaPacientes);
 		
 		JButton btnActualizar = new JButton("Actualizar Datos");
 		btnActualizar.setActionCommand("actualizar_Datos");
@@ -80,12 +82,14 @@ public class VerDoctores extends JPanel implements ActionListener
 		if(nombreEvento.equals("actualizar_Datos"))
 		{
 			tamanioTabla.setNumRows(0);
-			for(Dentista d:dent)
-			{
-				String auxNombre = "" +d.getNombre() +" " +d.getApellidoP() +" " +d.getApellidoM();
-				Object[] datosDoctor = {auxNombre,sdf.format(d.getFechaNac()),d.getId(),d.getTitulo(),"0"};
-				tamanioTabla.addRow(datosDoctor);
-			}
+                        for(Paciente p:pacie)
+        		{
+        			String auxNombre = "" +p.getNombre() +" " +p.getApellidoP() +" " +p.getApellidoM();
+        			Object[] datosPaciente = {auxNombre,sdf.format(p.getFechaNac()),p.getId(),
+                                p.getCita().getRazonVisita(),p.getCita().getDentista().getNombre(),
+                                p.getCita().getId()};
+                                tamanioTabla.addRow(datosPaciente);
+                        }
 	        revalidate();
 	        repaint();
 		}

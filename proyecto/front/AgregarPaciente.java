@@ -1,5 +1,7 @@
 package front;
 
+import backend.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -74,7 +77,7 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		lbApellidoP.setForeground(new Color(48,96,189));
 		add(lbApellidoP);
 		
-		JTextField txtApellidoP = new JTextField();
+		txtApellidoP = new JTextField();
 		txtApellidoP.setBounds(x + 200,y + 50 + 20,150,20);
 		txtApellidoP.setBackground(new Color(175,175,175));
 		txtApellidoP.setForeground(new Color(48,96,189));
@@ -219,15 +222,27 @@ public class AgregarPaciente extends JPanel implements ActionListener
 
 	public void guardarDatos()
 	{	
-		String id = "" +(dent.size() + 1);
+		String id = "B" +(dent.size() + 1);
+		String idCita = "C" +(dent.size() + 1);
 		String nombre = txtNombre.getText();
 		String apellidoP = txtApellidoP.getText();
 		String apellidoM = txtApellidoM.getText();
-		String idCita = txtIdCita.getText();
 		String receta = txtIdCita.getText();
+                Dentista auxDen = null;
+                
+		for(Dentista de:dent)
+		{
+			String aux = de.getNombre();
+                        if(aux.equals(de.getNombre()))
+                        {
+                            auxDen = de;
+                        }
+		}
+                
+                String box = (String) boxEstatus.getSelectedItem();
 		Date fecha = guardarDatosFecha();
-		/*pacie.add(new Paciente(new Cita(idCita,boxEstatus.getSelectedItem(),EstatusVisita.NOATENDIDA,
-				receta,conversion("07/07/2007"),12.0,NumConsultorio.UNO),id,nombre,apellidoP,apellidoM,fecha));*/
+		pacie.add(new Paciente(new Cita(idCita,auxDen,EstatusVisita.NOATENDIDA,
+				receta,conversion("07/07/2007"),12.0,NumConsultorio.UNO),id,nombre,apellidoP,apellidoM,fecha));
         revalidate();
         repaint();
 	}
@@ -298,7 +313,14 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		}
 		else if(nombreEvento.equals("guardar_Datos"))
 		{
-			guardarDatosFecha();
+			if(camposVacios() == false)
+			{
+                                guardarDatos();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null,"Ingrese Todos Los Datos");
+			}
 		}
 
 		else if(nombreEvento.equals("actualizar_Datos"))

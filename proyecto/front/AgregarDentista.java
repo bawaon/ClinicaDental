@@ -22,8 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
-import back.Dentista;
-import back.Paciente;
+import backend.*;
 
 public class AgregarDentista extends JPanel implements ActionListener
 {
@@ -204,7 +203,7 @@ public class AgregarDentista extends JPanel implements ActionListener
 
 	public void guardarDatos()
 	{	
-		String id = "" +(dent.size() + 1);
+		String id = "A" +(dent.size() + 1);
 		String nombre = txtNombre.getText();
 		String apellidoP = txtApellidoP.getText();
 		String apellidoM = txtApellidoM.getText();
@@ -284,7 +283,7 @@ public class AgregarDentista extends JPanel implements ActionListener
 		{
 			if(camposVacios() == false)
 			{
-                guardarDatos();
+                                guardarDatos();
 			}
 			else
 			{
