@@ -1,12 +1,12 @@
 package front;
 
-import backend.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
-import back.*;
+import backend.*;
 
 public class MenuCita extends JPanel implements ActionListener
 {
@@ -29,26 +29,27 @@ public class MenuCita extends JPanel implements ActionListener
 	private ReprogramarCita reprogramarCita;
 	private BuscarCita buscarCita;
 	private VerPacientes verPacientes;
+	private CrearCita crearCita;
+	private BuscarDisponibilidad buscarDisponibilidad;
 	
 	private ArrayList<Dentista> dent;
 	private ArrayList<Paciente> pacie;
-	
+	 
 	public MenuCita()
 	{
 		InterfazCita frame = (InterfazCita)SwingUtilities.getWindowAncestor(MenuCita.this);
-
+		
 		dent = new ArrayList<>();
-		dent.add(new Dentista("A1","Ariel","Gonzalez","Ordaz",conversion("01/01/2001"),"Odontologia",null));
-		dent.add(new Dentista("A2","Fernando","Aguilar","Martinez",conversion("02/02/2002"),"Odontologia",null));
-		dent.add(new Dentista("A3","IyaquiBalam","Garcia","Alvarado",conversion("03/03/2003"),"Odontologia",null));
-		dent.add(new Dentista("A4","Alondra Paloma","Gabriel","Cruz",conversion("04/04/2004"),"Odontologia",null));
-		dent.add(new Dentista("A5","Angel Gabriel","Castro","Gonzalez",conversion("05/05/2005"),"Odontologia",null));
-		dent.add(new Dentista("A6","Pablo","San Pedro","Avila",conversion("06/06/2006"),"Odontologia",null));
-		dent.add(new Dentista("A7","Aldair","Arteaga","Reyes",conversion("07/07/2007"),"Odontologia",null));
-
+		dent.add(new Dentista("Odontologia",(ArrayList<horarios>)creaListaHorarios(conversion("02/02/2023"),12.50),"A1","Ariel","Gonzalez","Ordaz",conversion("01/01/2001")));
+		dent.add(new Dentista("Odontologia",(ArrayList<horarios>)creaListaHorarios(conversion("15/07/2024"),8.15), "A2","Fernando","Aguilar","Martinez",conversion("02/02/2002")));
+		dent.add(new Dentista("Odontologia",(ArrayList<horarios>)creaListaHorarios(conversion("03/11/2025"),14.23), "A3","IyaquiBalam","Garcia","Alvarado",conversion("03/03/2003")));
+		dent.add(new Dentista("Odontologia",(ArrayList<horarios>)creaListaHorarios(conversion("22/04/2023"),3.45), "A4","Alondra Paloma","Gabriel","Cruz",conversion("04/04/2004")));
+		dent.add(new Dentista("Odontologia",(ArrayList<horarios>)creaListaHorarios(conversion("09/09/2024"),18.37), "A5","Angel Gabriel","Castro","Gonzalez",conversion("05/05/2005")));
+		dent.add(new Dentista("Odontologia",(ArrayList<horarios>)creaListaHorarios(conversion("28/02/2025"),7.59), "A6","Pablo","San Pedro","Avila",conversion("06/06/2006")));
+		dent.add(new Dentista("Odontologia",(ArrayList<horarios>)creaListaHorarios(conversion("24/04/2023"),15.50), "A7","Aldair","Arteaga","Reyes",conversion("07/07/2007")));
+		
 		pacie = new ArrayList<>();
-		pacie.add(new Paciente(new Cita("C1",dent.get(0),EstatusVisita.NOATENDIDA,
-				"Receta",conversion("07/07/2007"),12.0,NumConsultorio.UNO),
+		pacie.add(new Paciente(new Cita("C1",dent.get(0),EstatusVisita.NOATENDIDA,"Receta",conversion("07/07/2007"),12.0,NumConsultorio.UNO),
 				"B1","Pepe","Toño","Macias",conversion("01/01/2001")));
 		pacie.add(new Paciente(new Cita("C2",dent.get(1),EstatusVisita.NOATENDIDA,
 				"Cirugia",conversion("07/07/2007"),11.0,NumConsultorio.UNO),
@@ -60,16 +61,14 @@ public class MenuCita extends JPanel implements ActionListener
 		border.setTitleColor(new Color(48,96,189));
 		setBorder(border);
 
-		agregarPaciente = new AgregarPaciente(pacie,dent);
+		agregarPaciente = new AgregarPaciente(pacie, dent);
 		agregarDentista = new AgregarDentista(dent);
 		verPacientes = new VerPacientes(pacie);
 		verDoctores = new VerDoctores(dent);
 		reprogramarCita = new ReprogramarCita();
 		buscarCita = new BuscarCita(pacie);
-
-		JLabel etiquetaImagen = new JLabel(new ImageIcon("Logo.png"));
-		etiquetaImagen.setLocation(0,200);
-        add(etiquetaImagen);
+		crearCita = new CrearCita(pacie,dent);
+		buscarDisponibilidad = new BuscarDisponibilidad(dent);
         
 		JLabel titulo = new JLabel("Seleccione Una Opcion");
 		titulo.setBounds(20,20,200,20);
@@ -99,18 +98,37 @@ public class MenuCita extends JPanel implements ActionListener
 		btnVerDentistas.addActionListener(this);
 		btnVerDentistas.setBounds(20,50 + 90,200,20);
 		add(btnVerDentistas);
-
+		
+		
+		/*
 		JButton reprogramarCita = new JButton("Reprogramar Cita");
 		reprogramarCita.setActionCommand("reprogramar_Cita");
 		reprogramarCita.addActionListener(this);
 		reprogramarCita.setBounds(20,50 + 120,200,20);
 		add(reprogramarCita);
-
+		*/
+		
 		JButton btnEncontrarCita = new JButton("Encontrar Cita Por ID");
 		btnEncontrarCita.setActionCommand("encontrar_CitaID");
 		btnEncontrarCita.addActionListener(this);
-		btnEncontrarCita.setBounds(20,50 + 150,200,20);
+		btnEncontrarCita.setBounds(20,50 + 120,200,20);
 		add(btnEncontrarCita);
+
+		JButton btnCrearCita = new JButton("Crear Cita");
+		btnCrearCita.setActionCommand("crear_cita");
+		btnCrearCita.addActionListener(this);
+		btnCrearCita.setBounds(20,50 + 150,200,20);
+		add(btnCrearCita);
+		
+		JButton btnVerDisponibilidad = new JButton("Ver Disponibilidad");
+		btnVerDisponibilidad.setActionCommand("ver_disponibilidad");
+		btnVerDisponibilidad.addActionListener(this);
+		btnVerDisponibilidad.setBounds(20,50 + 180,200,20);
+		add(btnVerDisponibilidad);
+		
+		JLabel etiquetaImagen = new JLabel(new ImageIcon("./Logo.png"));
+		etiquetaImagen.setLocation(100,100);
+        add(etiquetaImagen);
 	}
 	
 	public void actionPerformed(ActionEvent e)
@@ -140,6 +158,14 @@ public class MenuCita extends JPanel implements ActionListener
 		{
 			AgregarPanelBuscarCita();
 		}
+		else if(nombreEvento.equals("crear_cita"))
+		{
+			AgregarCrearCita();
+		}
+		else if(nombreEvento.equals("ver_disponibilidad"))
+		{
+			AgregarPanelVerDisponibilidad();
+		}
 	}
 
     public void AgregarPanelAgregarPaciente()
@@ -150,6 +176,8 @@ public class MenuCita extends JPanel implements ActionListener
     	remove(verDoctores);
     	remove(reprogramarCita);
     	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
     	add(agregarPaciente);
         revalidate();
         repaint();
@@ -163,6 +191,8 @@ public class MenuCita extends JPanel implements ActionListener
     	remove(verDoctores);
     	remove(reprogramarCita);
     	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
     	add(agregarDentista);
         revalidate();
         repaint();
@@ -176,6 +206,8 @@ public class MenuCita extends JPanel implements ActionListener
     	remove(verDoctores);
     	remove(reprogramarCita);
     	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
     	add(verDoctores);
         revalidate();
         repaint();
@@ -189,6 +221,8 @@ public class MenuCita extends JPanel implements ActionListener
     	remove(verDoctores);
     	remove(reprogramarCita);
     	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
     	add(verPacientes);
         revalidate();
         repaint();
@@ -202,11 +236,43 @@ public class MenuCita extends JPanel implements ActionListener
     	remove(verDoctores);
     	remove(reprogramarCita);
     	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
     	add(reprogramarCita);
         revalidate();
         repaint();
     }
 
+    public void AgregarPanelVerDisponibilidad()
+    {
+    	remove(agregarPaciente);
+    	remove(agregarDentista);
+    	remove(verPacientes);
+    	remove(verDoctores);
+    	remove(reprogramarCita);
+    	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
+    	add(buscarDisponibilidad);
+        revalidate();
+        repaint();
+    }
+    
+    public void AgregarCrearCita()
+    {
+    	remove(agregarPaciente);
+    	remove(agregarDentista);
+    	remove(verPacientes);
+    	remove(verDoctores);
+    	remove(reprogramarCita);
+    	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
+    	add(crearCita);
+        revalidate();
+        repaint();
+    }
+    
     public void AgregarPanelBuscarCita()
     {
     	remove(agregarPaciente);
@@ -215,6 +281,8 @@ public class MenuCita extends JPanel implements ActionListener
     	remove(verDoctores);
     	remove(reprogramarCita);
     	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
     	add(buscarCita);
         revalidate();
         repaint();
@@ -228,6 +296,8 @@ public class MenuCita extends JPanel implements ActionListener
     	remove(verDoctores);
     	remove(reprogramarCita);
     	remove(buscarCita);
+    	remove(crearCita);
+    	remove(buscarDisponibilidad);
     	
     	for(Dentista d:dent)
     	{
@@ -237,6 +307,14 @@ public class MenuCita extends JPanel implements ActionListener
         revalidate();
         repaint();
     }
+    public static List<horarios> creaListaHorarios(Date fecha, Double hora) {
+		List<horarios> listaHorarios = new ArrayList<horarios>();
+		Date fechat = fecha;
+		Double horat= hora;
+		listaHorarios.add(new horarios(fechat,horat));
+		
+		return listaHorarios;
+	}
 
 	private Date conversion(String fecha)
 	{

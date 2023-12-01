@@ -1,7 +1,6 @@
 package front;
 
-import backend.*;
-
+import backend.Dentista;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.GridLayout;
@@ -24,7 +23,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import back.*;
+import backend.*;
 
 public class VerPacientes extends JPanel implements ActionListener
 {private String[] tablaColumnas;

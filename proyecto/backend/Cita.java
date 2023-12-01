@@ -1,4 +1,5 @@
-package proyecto.backend;
+package backend;
+
 
 import java.util.Date;
 
@@ -10,10 +11,11 @@ public class Cita
 	private String razonVisita;
 	private Date fechaCita;
 	private Double hora;
+	private NumConsultorio  numConsultorio;
 
 
 
-	public Cita(String id, Dentista dentista, EstatusVisita visita, String razonVisita, Date fechaCita, Double hora) {
+	public Cita(String id, Dentista dentista, EstatusVisita visita, String razonVisita, Date fechaCita, Double hora, NumConsultorio numConsultorio) {
 		super();
 		this.id = id;
 		this.dentista = dentista; 
@@ -21,6 +23,7 @@ public class Cita
 		this.razonVisita = razonVisita;
 		this.fechaCita = fechaCita;
 		this.hora = hora;
+		this.numConsultorio = numConsultorio;
 	}
 	
 	public Cita() {}
@@ -83,6 +86,17 @@ public class Cita
 		this.hora = hora;
 	}
 
+	public NumConsultorio getNumConsultorio() 
+	{
+		return numConsultorio;
+	}
+
+	public void setNumConsultorio(NumConsultorio numConsultorio) 
+	{
+		this.numConsultorio = numConsultorio;
+	}
+
+	
 
 
 	

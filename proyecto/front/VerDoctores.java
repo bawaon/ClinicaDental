@@ -1,6 +1,6 @@
 package front;
 
-import backend.*;
+import backend.Dentista;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.GridLayout;
@@ -23,12 +23,12 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import back.*;
+import backend.*;
 
 public class VerDoctores extends JPanel implements ActionListener
 {
 	private String[] tablaColumnas;
-        private DefaultTableModel tamanioTabla;
+    private DefaultTableModel tamanioTabla;
 	private ArrayList<Dentista> dent;
 	
 	public VerDoctores(ArrayList<Dentista> dent)
@@ -59,7 +59,7 @@ public class VerDoctores extends JPanel implements ActionListener
 		for(Dentista d:dent)
 		{
 			String auxNombre = "" +d.getNombre() +" " +d.getApellidoP() +" " +d.getApellidoM();
-			Object[] datosDoctor = {auxNombre,sdf.format(d.getFechaNac()),d.getId(),d.getTitulo(),"0"};
+			Object[] datosDoctor = {auxNombre,sdf.format(d.getFechaNac()),d.getId(),d.getTitulo(),"Disponible"};
 			tamanioTabla.addRow(datosDoctor);
 		}
 		JScrollPane scrollTablaDoctores = new JScrollPane(tablaDoctores);
@@ -83,7 +83,7 @@ public class VerDoctores extends JPanel implements ActionListener
 			for(Dentista d:dent)
 			{
 				String auxNombre = "" +d.getNombre() +" " +d.getApellidoP() +" " +d.getApellidoM();
-				Object[] datosDoctor = {auxNombre,sdf.format(d.getFechaNac()),d.getId(),d.getTitulo(),"0"};
+				Object[] datosDoctor = {auxNombre,sdf.format(d.getFechaNac()),d.getId(),d.getTitulo(),"Disponible"};
 				tamanioTabla.addRow(datosDoctor);
 			}
 	        revalidate();

@@ -1,9 +1,8 @@
-package proyecto.backend;
+package backend;
 
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +18,7 @@ public class Consultorio
 	private ArrayList<Cita> cita;
 	
 
-	
+	 
 	public Consultorio(String lugar) {
 		super();
 		this.lugar = lugar;
@@ -407,7 +406,7 @@ public class Consultorio
 	    JOptionPane.showMessageDialog(null, "Dentista no encontrado");
 	    return null;
 	}
-
+	
 	private String formatoHora(Double hora) {
 	    int horaEntera = hora.intValue();
 	    int minutos = (int) ((hora - horaEntera) * 60);

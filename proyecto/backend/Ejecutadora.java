@@ -1,4 +1,4 @@
-package proyecto.backend;
+package backend;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -130,8 +130,8 @@ public class Ejecutadora {
 	    calendarMartes.set(Calendar.MINUTE, 0);
 
 	    for (int i = 0; i < 6; i++) { // Seis bloques de una hora
-	        horariosLunesMartes.add(new horarios(calendarLunes.getTime(), (double) calendarLunes.get(Calendar.HOUR_OF_DAY), true));
-	        horariosLunesMartes.add(new horarios(calendarMartes.getTime(), (double) calendarMartes.get(Calendar.HOUR_OF_DAY), true));
+	        horariosLunesMartes.add(new horarios(calendarLunes.getTime(), (double) calendarLunes.get(Calendar.HOUR_OF_DAY)));
+	        horariosLunesMartes.add(new horarios(calendarMartes.getTime(), (double) calendarMartes.get(Calendar.HOUR_OF_DAY)));
 
 	        calendarLunes.add(Calendar.HOUR_OF_DAY, 1);
 	        calendarMartes.add(Calendar.HOUR_OF_DAY, 1);

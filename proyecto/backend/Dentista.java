@@ -1,6 +1,7 @@
-package proyecto.backend;
+package backend;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Dentista extends Persona
@@ -59,14 +60,9 @@ public class Dentista extends Persona
 		this.horariosDisponibles = horariosDisponibles;
 	}
 	
-    public boolean verificarDisponibilidad(Date fecha, Double hora) {
-        for (horarios horario : horariosDisponibles) {
-            if (horario.getFecha().equals(fecha) && horario.getHora().equals(hora) && horario.isDisponible()) {
-                return true;
-            }
-        }
-        return false;
-    }
+   
 	
-
+	
 }
+
+

@@ -22,35 +22,34 @@ import javax.swing.border.TitledBorder;
 
 import backend.*;
 
-public class AgregarPaciente extends JPanel implements ActionListener
-{
+public class CrearCita extends JPanel implements ActionListener{
+
 	private JComboBox boxAnios;
 	private JComboBox boxMeses;
 	private JComboBox boxDias;
 	private JComboBox boxEstatus;
 
-	private JTextField txtNombre;
-	private JTextField txtApellidoP;
-	private JTextField txtApellidoM;
-	private JTextField txtIdCita;
+	private JTextField txtRazon;
+	private JTextField txtIDPaciente;
+	private JTextField txtHora;
 	
 	private ArrayList<Dentista> dent;
 	private ArrayList<Paciente> pacie;
 	
-	public AgregarPaciente(ArrayList<Paciente> pacie,ArrayList<Dentista> dent)
+	public CrearCita(ArrayList<Paciente> pacie,ArrayList<Dentista> dent)
 	{
 		setLayout(null);
 		setSize(585,405);
 		setLocation(235,20);
 		setBackground(new Color(215,245,240));
-		TitledBorder border = BorderFactory.createTitledBorder("Agregar Paciente");
+		TitledBorder border = BorderFactory.createTitledBorder("Crear Cita");
 		border.setTitleColor(new Color(48,96,189));
 		setBorder(border);
 
 		this.pacie = pacie;
 		this.dent = dent;
 		
-		JLabel lbTitulo = new JLabel("Ingrese Datos Del Paciente");
+		JLabel lbTitulo = new JLabel("Ingrese Datos De La Cita");
 		lbTitulo.setBounds(20,20,200,20);
 		lbTitulo.setForeground(new Color(48,96,189));
 		add(lbTitulo);
@@ -58,49 +57,49 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		int x = 10,y = 0;
 		LocalDate currentDate = LocalDate.now();
 
-		JLabel lbNombre = new JLabel("Nombre");
-		lbNombre.setBounds(x + 75,y + 50,75,20);
-		lbNombre.setForeground(new Color(48,96,189));
-		add(lbNombre);
+		JLabel lbIdPaciente = new JLabel("ID Paciente");
+		lbIdPaciente.setBounds(x + 75,y + 50,75,20);
+		lbIdPaciente.setForeground(new Color(48,96,189));
+		add(lbIdPaciente);
 		
-		txtNombre = new JTextField();
-		txtNombre.setBounds(x + 25,y + 50 + 20,150,20);
-		txtNombre.setBackground(new Color(175,175,175));
-		txtNombre.setForeground(new Color(48,96,189));
-		txtNombre.setEditable(true);
-		txtNombre.setColumns(20);
-		add(txtNombre);
+		txtIDPaciente = new JTextField();
+		txtIDPaciente.setBounds(x + 25,y + 50 + 20,150,20);
+		txtIDPaciente.setBackground(new Color(175,175,175));
+		txtIDPaciente.setForeground(new Color(48,96,189));
+		txtIDPaciente.setEditable(true);
+		txtIDPaciente.setColumns(20);
+		add(txtIDPaciente);
 
-		JLabel lbApellidoP = new JLabel("Apellido Paterno");
-		lbApellidoP.setBounds(x + 230,y + 50,125,20);
-		lbApellidoP.setForeground(new Color(48,96,189));
-		add(lbApellidoP);
+		JLabel lbRazon = new JLabel("Razon de la Visita");
+		lbRazon.setBounds(x + 230,y + 50,125,20);
+		lbRazon.setForeground(new Color(48,96,189));
+		add(lbRazon);
 		
-		txtApellidoP = new JTextField();
-		txtApellidoP.setBounds(x + 200,y + 50 + 20,150,20);
-		txtApellidoP.setBackground(new Color(175,175,175));
-		txtApellidoP.setForeground(new Color(48,96,189));
-		txtApellidoP.setEditable(true);
-		txtApellidoP.setColumns(20);
-		add(txtApellidoP);
-
-		JLabel lbApellidoM = new JLabel("Apellido Materno");
-		lbApellidoM.setBounds(x + 405,50,125,20);
-		lbApellidoM.setForeground(new Color(48,96,189));
-		add(lbApellidoM);
+		txtRazon = new JTextField();
+		txtRazon.setBounds(x + 200,y + 50 + 20,150,20);
+		txtRazon.setBackground(new Color(175,175,175));
+		txtRazon.setForeground(new Color(48,96,189));
+		txtRazon.setEditable(true);
+		txtRazon.setColumns(20);
+		add(txtRazon);
 		
-		txtApellidoM = new JTextField();
-		txtApellidoM.setBounds(x + 375,y + 50 + 20,150,20);
-		txtApellidoM.setBackground(new Color(175,175,175));
-		txtApellidoM.setForeground(new Color(48,96,189));
-		txtApellidoM.setEditable(true);
-		txtApellidoM.setColumns(20);
-		add(txtApellidoM);
+		JLabel lbHora = new JLabel("Hora(HH.MM)");
+		lbHora.setBounds(x + 75,y + 100 + 20 + 80,150,20);
+		lbHora.setForeground(new Color(48,96,189));
+		add(lbHora);
+		
+		txtHora = new JTextField();
+		txtHora.setBounds(x + 25,y + 100 + 20 + 80 + 20,150,20);
+		txtHora.setBackground(new Color(175,175,175));
+		txtHora.setForeground(new Color(48,96,189));
+		txtHora.setEditable(true);
+		txtHora.setColumns(20);
+		add(txtHora);
 
-		JLabel lbFechaNacimiento = new JLabel("Fecha De Nacimiento");
-		lbFechaNacimiento.setBounds(x + 25,y + 50 + 20 + 40,150,20);
-		lbFechaNacimiento.setForeground(new Color(48,96,189));
-		add(lbFechaNacimiento);
+		JLabel lbFechaCita = new JLabel("Fecha De Cita");
+		lbFechaCita.setBounds(x + 25,y + 50 + 20 + 40,150,20);
+		lbFechaCita.setForeground(new Color(48,96,189));
+		add(lbFechaCita);
 
 		JLabel lbDias = new JLabel("Dia");
 		lbDias.setBounds(x + 60 + 150,y + 50 + 40,100,20);
@@ -135,16 +134,15 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		lbAnios.setForeground(new Color(48,96,189));
 		add(lbAnios);
 		
-		String[] anios = new String[currentDate.getYear() + -1950];
-		for(int i = currentDate.getYear() - 1;i >= 1950;i -= 1)
-		{
-			anios[i + -1950] = "" +(i + 1);
+		String[] anios = new String[3];
+		for (int i = 0; i <=2; i++) {
+		    anios[i] = String.valueOf(currentDate.getYear() + i );
 		}
 		boxAnios = new JComboBox<>(anios);
 		boxAnios.setBounds(x + 275 + 150,y + 50 + 20 + 40,100,20);
 		add(boxAnios);
-
-		JLabel lbIdCita = new JLabel("Razón de ingreso:");
+/*
+		JLabel lbIdCita = new JLabel("ID De La Cita");
 		lbIdCita.setBounds(x + 65,y + 50 + 100,150,20);
 		lbIdCita.setForeground(new Color(48,96,189));
 		add(lbIdCita);
@@ -156,7 +154,7 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		txtIdCita.setEditable(true);
 		txtIdCita.setColumns(20);
 		add(txtIdCita);
-
+*/
 		JLabel lbDentista = new JLabel("Dentista");
 		lbDentista.setBounds(x + 235,y + 50 + 100,150,20);
 		lbDentista.setForeground(new Color(48,96,189));
@@ -176,21 +174,15 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		btnGuardar.addActionListener(this);
 		btnGuardar.setBounds(20,300,100,20);
 		add(btnGuardar);
-		
-		/*
-		JButton btnActualizar = new JButton("Actualizar Datos");
-		btnActualizar.setActionCommand("actualizar_Datos");
-		btnActualizar.addActionListener(this);
-		btnActualizar.setBounds(420,300,100,20);
-		add(btnActualizar);*/
+
+
 	}
 
 	private boolean camposVacios()
 	{
-		return txtNombre.getText().isEmpty() ||
-				txtApellidoP.getText().isEmpty() ||
-				txtApellidoM.getText().isEmpty() ||
-				txtIdCita.getText().isEmpty();
+		return txtRazon.getText().isEmpty() ||
+				txtIDPaciente.getText().isEmpty() ||
+				txtHora.getText().isEmpty();
     }
 	
 	private Date conversion(String fecha)
@@ -220,32 +212,60 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		return fecha;
 	}
 
-	public void guardarDatos()
-	{	
-		String id = "B" +(dent.size() + 1);
-		String idCita = "C" +(dent.size() + 1);
-		String nombre = txtNombre.getText();
-		String apellidoP = txtApellidoP.getText();
-		String apellidoM = txtApellidoM.getText();
-		String receta = txtIdCita.getText();
-                Dentista auxDen = null;
-                
-		for(Dentista de:dent)
-		{
-			String aux = de.getNombre();
-                        if(aux.equals(de.getNombre()))
-                        {
-                            auxDen = de;
-                        }
-		}
-                
-                String box = (String) boxEstatus.getSelectedItem();
-		Date fecha = guardarDatosFecha();
-		pacie.add(new Paciente(new Cita(idCita,auxDen,EstatusVisita.NOATENDIDA,
-				receta,conversion("07/07/2007"),12.0,NumConsultorio.UNO),id,nombre,apellidoP,apellidoM,fecha));
-        revalidate();
-        repaint();
+	public void guardarDatos() {
+	    String aux = txtIDPaciente.getText();
+	    Paciente auxPc = null;
+
+	    for (Paciente pc : pacie) {
+	        if (aux.equals(pc.getId())) {
+	            auxPc = pc;
+	            break; // Salir del bucle una vez que se encuentra el paciente
+	        }else {
+	        	auxPc = null;
+	        }
+	    }
+	    if (auxPc != null) {
+	        String id = "C" + (dent.size() + 15);
+	        String razon = txtRazon.getText();
+	        Double hora = Double.parseDouble(txtHora.getText());
+	        Date fecha = guardarDatosFecha();
+	        Dentista auxDen = null;
+	        String box = (String) boxEstatus.getSelectedItem();
+	        for (Dentista de : dent) {
+	            if (box.equals(de.getNombre())) {
+	                auxDen = de;
+	            }
+	        }
+
+	        boolean horarioDisponible = false;
+
+	        for (horarios horario : auxDen.getHorariosDisponibles()) {
+	            if (horario.getFecha().equals(fecha) &&
+	                horario.getHora().equals(hora) &&
+	                horario.getDisponible()) {
+
+	                horario.setDisponible(false);
+	                auxPc.setCita(new Cita(id, auxDen, EstatusVisita.NOATENDIDA,
+	                        razon, fecha, hora, NumConsultorio.UNO));
+	                JOptionPane.showMessageDialog(null, "ID de la Cita:" + id);
+	                revalidate();
+	                repaint();
+	                horarioDisponible = true;
+	                break; // Salir del bucle una vez que se asigna la cita
+	            }
+	        }
+
+	        if (!horarioDisponible) {
+	            JOptionPane.showMessageDialog(null, "Horario no Disponible");
+	        }
+	    } else {
+	        JOptionPane.showMessageDialog(null, "No existe el paciente ingresado");
+	    }
 	}
+
+
+		
+	
 	
 	public void actionPerformed(ActionEvent e)
 	{
@@ -315,7 +335,7 @@ public class AgregarPaciente extends JPanel implements ActionListener
 		{
 			if(camposVacios() == false)
 			{
-                                guardarDatos();
+                guardarDatos();
 			}
 			else
 			{
@@ -323,14 +343,6 @@ public class AgregarPaciente extends JPanel implements ActionListener
 			}
 		}
 
-		else if(nombreEvento.equals("actualizar_Datos"))
-		{
-			boxEstatus.removeAllItems();
-			for(Dentista de:dent)
-			{
-				String aux = de.getNombre();
-				boxEstatus.addItem(aux);
-			}
-		}
+		
 	}
 }

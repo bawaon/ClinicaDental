@@ -1,4 +1,4 @@
-package proyecto.backend;
+package backend;
 
 import java.util.Date;
 

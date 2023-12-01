@@ -1,7 +1,6 @@
 package front;
 
-import backend.*;
-
+import backend.Paciente;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,7 +64,7 @@ public class BuscarCita extends JPanel implements ActionListener
 		btnBuscar.setBounds(100,y + 50 + 20,100,20);
 		add(btnBuscar);
 		
-		String[] tablaColumnas = {"Nombre Completo","Fecha Nacimiento","ID","Razon","Dentista","ID Paciente"};
+		String[] tablaColumnas = {"Nombre Completo","Fecha Nacimiento","ID Paciente","Razon","Dentista","ID Cita"};
 		tamanioTabla = new DefaultTableModel(tablaColumnas,0);
 		JTable tablaPacientes = new JTable(tamanioTabla);
 		tablaPacientes.setEnabled(false);
@@ -90,7 +89,6 @@ public class BuscarCita extends JPanel implements ActionListener
                     {
                             if(p.getCita().getId().equals(txtId.getText()))
                             {
-                                    auxPacie = p;
                                     String auxNombre = "" +p.getNombre() +" " +p.getApellidoP() +" " +p.getApellidoM();
                                     Object[] datosPaciente = {auxNombre,sdf.format(p.getFechaNac()),p.getId(),
                                     p.getCita().getRazonVisita(),p.getCita().getDentista().getNombre(),
@@ -98,10 +96,10 @@ public class BuscarCita extends JPanel implements ActionListener
                                     tamanioTabla.addRow(datosPaciente);
                                     break;
                             }
-                    }
-                    if(auxPacie == null)
-                    {
-                        JOptionPane.showMessageDialog(null,"Ingrese Valor Correcto");
+                            else
+                            {
+                                    JOptionPane.showMessageDialog(null,"Ingrese Valor Correcto"); 
+                            }
                     }
                 }
         }

@@ -1,6 +1,5 @@
 package front;
 
-import backend.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,24 +16,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 public class ReprogramarCita extends JPanel implements ActionListener
 {
-        private JTextField txtId;
-        private DefaultTableModel tamanioTabla;
-        private JComboBox boxreagenda;
-        
-        private JLabel lbFechaNacimiento;
-        private JLabel lbDias;
-        private JLabel lbMeses;
-        private JLabel lbAnios;
-                        
 	private JComboBox boxAnios;
 	private JComboBox boxMeses;
 	private JComboBox boxDias;
@@ -71,35 +57,18 @@ public class ReprogramarCita extends JPanel implements ActionListener
 		add(txtId);
 
 		JButton btnBuscar = new JButton("Buscar ID");
-		btnBuscar.setActionCommand("buscar_ID");
-		btnBuscar.addActionListener(this);
 		btnBuscar.setBounds(100,y + 50 + 20,100,20);
 		add(btnBuscar);
-                
-                boxreagenda = new JComboBox<>(EstatusVisita.values());
-		btnBuscar.setActionCommand("activar_Reagenda");
-		btnBuscar.addActionListener(this);
-		boxreagenda.setBounds(x + 20,y + 50 + 80 + 60,100,20);
-		add(boxreagenda);
-                
-		String[] tablaColumnas = {"Nombre Completo","Fecha Nacimiento","ID","Razon","Dentista","ID Paciente"};
-		tamanioTabla = new DefaultTableModel(tablaColumnas,0);
-		JTable tablaPacientes = new JTable(tamanioTabla);
-		tablaPacientes.setEnabled(false);
-		Border bordeListaDentistas = BorderFactory.createCompoundBorder(
-	            BorderFactory.createLineBorder(new Color(0,0,0),1),BorderFactory.createEmptyBorder(5,5,5,5));
-		tablaPacientes.setBorder(bordeListaDentistas);
-		JScrollPane scrolltablaPacientes = new JScrollPane(tablaPacientes);
-		scrolltablaPacientes.setBounds(20,100,540,50);
-		add(scrolltablaPacientes);
-                
-		lbFechaNacimiento = new JLabel("Fecha Para Nueva Cita");
-		lbFechaNacimiento.setBounds(x + 275,y + 50 + 20 + 80,150,20);
+
+		JLabel lbFechaNacimiento = new JLabel("Fecha Para Nueva Cita");
+		lbFechaNacimiento.setBounds(x + 25,y + 50 + 20 + 80,150,20);
 		lbFechaNacimiento.setForeground(new Color(48,96,189));
-                
-		lbDias = new JLabel("Dia");
-		lbDias.setBounds(x + 60 + 150,y + 50 + 120,100,20);
+		add(lbFechaNacimiento);
+
+		JLabel lbDias = new JLabel("Dia");
+		lbDias.setBounds(x + 60 + 150,y + 50 + 80,100,20);
 		lbDias.setForeground(new Color(48,96,189));
+		add(lbDias);
 		
 		String[] dias = new String[31];
 		for(int i = 0;i < 31;i += 1)
@@ -107,12 +76,13 @@ public class ReprogramarCita extends JPanel implements ActionListener
 			dias[i] = "" +(i + 1);
 		}
 		boxDias = new JComboBox<>(dias);
-		boxDias.setBounds(x + 25 + 150,y + 50 + 20 + 120,100,20);
-		
+		boxDias.setBounds(x + 25 + 150,y + 50 + 20 + 80,100,20);
+		add(boxDias);
 
-		lbMeses = new JLabel("Mes");
-		lbMeses.setBounds(x + 180 + 150,y + 50 + 120,100,20);
+		JLabel lbMeses = new JLabel("Mes");
+		lbMeses.setBounds(x + 180 + 150,y + 50 + 80,100,20);
 		lbMeses.setForeground(new Color(48,96,189));
+		add(lbMeses);
 		
 		String meses[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
 				"Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
@@ -120,11 +90,13 @@ public class ReprogramarCita extends JPanel implements ActionListener
 		boxMeses = new JComboBox<>(meses);
 		boxMeses.setActionCommand("detectar_Meses");
 		boxMeses.addActionListener(this);
-		boxMeses.setBounds(x + 150 + 150,y + 50 + 20 + 120,100,20);
+		boxMeses.setBounds(x + 150 + 150,y + 50 + 20 + 80,100,20);
+		add(boxMeses);
 
-		lbAnios = new JLabel("Año");
-		lbAnios.setBounds(x + 300 + 150,y + 50 + 120,100,20);
+		JLabel lbAnios = new JLabel("Año");
+		lbAnios.setBounds(x + 300 + 150,y + 50 + 80,100,20);
 		lbAnios.setForeground(new Color(48,96,189));
+		add(lbAnios);
 		
 		String[] anios = new String[currentDate.getYear() + -1950];
 		for(int i = currentDate.getYear() - 1;i >= 1950;i -= 1)
@@ -132,7 +104,8 @@ public class ReprogramarCita extends JPanel implements ActionListener
 			anios[i + -1950] = "" +(i + 1);
 		}
 		boxAnios = new JComboBox<>(anios);
-		boxAnios.setBounds(x + 275 + 150,y + 50 + 20 + 120,100,20);
+		boxAnios.setBounds(x + 275 + 150,y + 50 + 20 + 80,100,20);
+		add(boxAnios);
 		
 		JButton btnGuardar = new JButton("Guardar Datos");
 		btnGuardar.setActionCommand("guardar_Datos");
@@ -235,31 +208,6 @@ public class ReprogramarCita extends JPanel implements ActionListener
 		else if(nombreEvento.equals("guardar_Datos"))
 		{
 			guardarDatosFecha();
-		}
-		else if(nombreEvento.equals("activar_Reagenda"))
-		{
-                        String activarReagenda = (String)boxreagenda.getSelectedItem();
-                        if(activarReagenda.equals("REAGENDADA"))
-                        {
-                                add(lbFechaNacimiento);
-                                add(boxDias);
-                                add(lbDias);
-                                add(boxMeses);
-                                add(lbMeses);
-                                add(boxAnios);
-                                add(lbAnios);   
-                        }
-                        else
-                        {
-                                remove(lbFechaNacimiento);
-                                remove(boxDias);
-                                remove(lbDias);
-                                remove(boxMeses);
-                                remove(lbMeses);
-                                remove(boxAnios);
-                                remove(lbAnios); 
-                        }
-                            
 		}
 	}
 }

@@ -22,7 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
-import backend.*;
+import backend.Dentista;
+import backend.Paciente;
+import backend.horarios;
 
 public class AgregarDentista extends JPanel implements ActionListener
 {
@@ -30,12 +32,16 @@ public class AgregarDentista extends JPanel implements ActionListener
 	private JComboBox boxMeses;
 	private JComboBox boxDias;
 	
+	private JComboBox boxAniosC;
+	private JComboBox boxMesesC;
+	private JComboBox boxDiasC;
+	
 	private JTextField txtNombre;
 	private JTextField txtApellidoP;
 	private JTextField txtApellidoM;
 	private JTextField txtId;
 	private JTextField txtEspecialidad;
-
+	private JTextField txtHora;
 	private ArrayList<Dentista> dent;
 	
 	public AgregarDentista(ArrayList<Dentista> dent)
@@ -159,6 +165,65 @@ public class AgregarDentista extends JPanel implements ActionListener
 		boxAnios.setBounds(x + 275 + 150,y + 50 + 20 + 80,100,20);
 		add(boxAnios);
 		
+		JLabel lbHora = new JLabel("Hora(HH.MM)");
+		lbHora.setBounds(x + 75,y + 100 + 20 + 80,150,20);
+		lbHora.setForeground(new Color(48,96,189));
+		add(lbHora);
+		
+		txtHora = new JTextField();
+		txtHora.setBounds(x + 25,y + 100 + 20 + 80 + 20,150,20);
+		txtHora.setBackground(new Color(175,175,175));
+		txtHora.setForeground(new Color(48,96,189));
+		txtHora.setEditable(true);
+		txtHora.setColumns(20);
+		add(txtHora);
+		
+		JLabel lbDispo1 = new JLabel("Dia Disponible");
+		lbDispo1.setBounds(x + 25,y + 150 + 20 + 80,150,20);
+		lbDispo1.setForeground(new Color(48,96,189));
+		add(lbDispo1);
+
+		JLabel lbDiasC = new JLabel("Dia");
+		lbDiasC.setBounds(x + 60 + 150,y + 150 + 80,100,20);
+		lbDiasC.setForeground(new Color(48,96,189));
+		add(lbDiasC);
+		
+		String[] diasC = new String[31];
+		for(int i = 0;i < 31;i += 1)
+		{
+			diasC[i] = "" +(i + 1);
+		}
+		boxDiasC = new JComboBox<>(diasC);
+		boxDiasC.setBounds(x + 25 + 150,y + 150 + 20 + 80,100,20);
+		add(boxDiasC);
+
+		JLabel lbMesesC = new JLabel("Mes");
+		lbMesesC.setBounds(x + 180 + 150,y + 150 + 80,100,20);
+		lbMesesC.setForeground(new Color(48,96,189));
+		add(lbMesesC);
+		
+		String mesesC[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
+				"Agosto","Septiembre","Octubre","Noviembre","Diciembre"}; 
+		boxMesesC = new JComboBox<>(mesesC);
+		boxMesesC.setActionCommand("detectar_MesesC");
+		boxMesesC.addActionListener(this);
+		boxMesesC.setBounds(x + 150 + 150,y + 150 + 20 + 80,100,20);
+		add(boxMesesC);
+
+		JLabel lbAniosC = new JLabel("Año");
+		lbAniosC.setBounds(x + 300 + 150,y + 150 + 80,100,20);
+		lbAniosC.setForeground(new Color(48,96,189));
+		add(lbAniosC);
+		
+		String[] aniosC = new String[3];
+		for (int i = 0; i <=2; i++) {
+		    aniosC[i] = String.valueOf(currentDate.getYear() + i );
+		}
+
+		boxAniosC = new JComboBox<>(aniosC);
+		boxAniosC.setBounds(x + 275 + 150,y + 150 + 20 + 80,100,20);
+		add(boxAniosC);
+		
 		JButton btnGuardar = new JButton("Guardar Datos");
 		btnGuardar.setActionCommand("guardar_Datos");
 		btnGuardar.addActionListener(this);
@@ -200,6 +265,17 @@ public class AgregarDentista extends JPanel implements ActionListener
 		System.out.print(fecha);
 		return fecha;
 	}
+	public Date guardarDatosFechaC()
+	{
+		Date fecha = null;
+		String diaObtenido = "" +boxDiasC.getSelectedItem();
+		String mesObtenido = "" +(boxMesesC.getSelectedIndex() + 1);
+		String anioObtenido = "" +boxAniosC.getSelectedItem();
+		String data = diaObtenido +"/" +mesObtenido +"/" +anioObtenido;
+		fecha = conversion(data);
+		System.out.print(fecha);
+		return fecha;
+	}
 
 	public void guardarDatos()
 	{	
@@ -207,9 +283,13 @@ public class AgregarDentista extends JPanel implements ActionListener
 		String nombre = txtNombre.getText();
 		String apellidoP = txtApellidoP.getText();
 		String apellidoM = txtApellidoM.getText();
-		String especialidad = txtEspecialidad.getText();
+		String titulo = txtEspecialidad.getText();
 		Date fecha = guardarDatosFecha();
-		dent.add(new Dentista(id,nombre,apellidoP,apellidoM,fecha,especialidad,null));
+		Date fechaC = guardarDatosFechaC();
+		Double hora=Double.parseDouble(txtHora.getText());
+		ArrayList<horarios> listaHorarios = new ArrayList<horarios>();
+		listaHorarios.add(new horarios(fechaC,hora));
+		dent.add(new Dentista(titulo, listaHorarios, id,nombre,apellidoP,apellidoM,fecha));
         revalidate();
         repaint();
 	}
@@ -220,6 +300,7 @@ public class AgregarDentista extends JPanel implements ActionListener
 		int diasTotal = 0;
 		String nombreEvento = e.getActionCommand();
 		String mesObtenido = (String)boxMeses.getSelectedItem();
+		String mesObtenidoC = (String)boxMesesC.getSelectedItem();
 		
 		if(nombreEvento.equals("detectar_Meses"))
 		{
@@ -273,17 +354,78 @@ public class AgregarDentista extends JPanel implements ActionListener
 			}
 			boxDias.removeAllItems();
 			String[] dias = new String[diasTotal];
+			
 			for(int i = 0;i < diasTotal;i += 1)
 			{
 				dias[i] = "" +(i + 1);
 				boxDias.addItem(dias[i]);
 			}
 		}
+			diasTotal=0;
+			if(nombreEvento.equals("detectar_MesesC"))
+			{
+				if(mesObtenidoC.equals("Enero"))
+				{
+					diasTotal = 31;
+				}
+				else if(mesObtenidoC.equals("Febrero"))
+				{
+					diasTotal = 28;
+				}
+				else if(mesObtenidoC.equals("Marzo"))
+				{
+					diasTotal = 31;
+				}
+				else if(mesObtenidoC.equals("Abril"))
+				{
+					diasTotal = 30;
+				}
+				else if(mesObtenidoC.equals("Mayo"))
+				{
+					diasTotal = 31;
+				}
+				else if(mesObtenidoC.equals("Junio"))
+				{
+					diasTotal = 30;
+				}
+				else if(mesObtenidoC.equals("Julio"))
+				{
+					diasTotal = 31;
+				}
+				else if(mesObtenidoC.equals("Agosto"))
+				{
+					diasTotal = 31;
+				}
+				else if(mesObtenidoC.equals("Septiembre"))
+				{
+					diasTotal = 30;
+				}
+				else if(mesObtenidoC.equals("Octubre"))
+				{
+					diasTotal = 31;
+				}
+				else if(mesObtenidoC.equals("Noviembre"))
+				{
+					diasTotal = 30;
+				}
+				else if(mesObtenidoC.equals("Diciembre"))
+				{
+					diasTotal = 31;
+				}
+				boxDiasC.removeAllItems();
+				String[] diasC = new String[diasTotal];
+				
+				for(int i = 0;i < diasTotal;i += 1)
+				{
+					diasC[i] = "" +(i + 1);
+					boxDiasC.addItem(diasC[i]);
+				}
+		}
 		else if(nombreEvento.equals("guardar_Datos"))
 		{
 			if(camposVacios() == false)
 			{
-                                guardarDatos();
+                 guardarDatos();
 			}
 			else
 			{
